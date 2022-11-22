@@ -1,22 +1,18 @@
 # img_viewer.py
 
 import PySimpleGUI as sg
-import os.path
+import os
 
 # First the window layout in 2 columns
 
 file_list_column = [
-    [
-        sg.Text("Image Folder"),
-        sg.In(size=(25, 1), enable_events=True, key="-FOLDER-"),
-        sg.FolderBrowse(),
-    ],
-    [
-        sg.Listbox(
-            values=[], enable_events=True, size=(40, 20), key="-FILE LIST-"
-        )
-    ],
+    sg.Listbox(
+        values=[], enable_events=True, size=(40, 20), key="-FILE LIST-"
+    )
 ]
+
+for file in os.listdir('NftSource'):
+    file_list_column.insert(0, file)
 
 # For now will only show the name of the file that was chosen
 image_viewer_column = [
@@ -39,22 +35,8 @@ window = sg.Window("Image Viewer", layout)
 # Run the Event Loop
 while True:
     event, values = window.read()
-    if event == "-FOLDER-":
-        folder = values["-FOLDER-"]
-        try:
-            # Get list of files in folder
-            file_list = os.listdir(folder)
-        except:
-            file_list = []
-
-        fnames = [
-            f
-            for f in file_list
-            if os.path.isfile(os.path.join(folder, f))
-            and f.lower().endswith((".png", ".gif"))
-        ]
-    window["-FILE LIST-"].update(fnames)
-    window["-FILE LIST-"].update(fnames)
+    if event == "Exit" or event == sg.WIN_CLOSED:
+        break
     if event == "-FILE LIST-":  # A file was chosen from the listbox
         try:
             filename = os.path.join(
