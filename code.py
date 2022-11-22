@@ -1,35 +1,5 @@
 import pickle
 
-
-def addNew():
-    data = load()
-    nftname = input("NFT NAME : ")
-    nftimg = input("NFT IMG : ")
-    nftOwner = input("NFT OWNER (x if no owner) : ")
-    newNft = [nftname, nftimg, nftOwner]
-    data.append(newNft)
-    save(data)
-
-def editNft():
-    data = load()
-    search = input("NFT name : ")
-    result = findIndex(data, search)
-    print("\t\tSELECTED NFT")
-    print(data[result[0]])
-    save(data)
-
-
-
-
-action = None
-while(action != "3") : 
-    action = input("\t\tNFT PROJECT\n1- ADD NEW NFT\n2- MOVE NFT\n3- CLOSE\n")
-    if(action == "1") :
-        addNew()
-    elif(action == "2") :
-        editNft()
-        
-        
 def findIndex(stringArr, keyString):
  
     #  Initialising result array to -1
@@ -58,8 +28,35 @@ def findIndex(stringArr, keyString):
 def load() :
     with open("data", "rb") as fp:   # Unpickling
         return pickle.load(fp)
-    
+
 def save(data) :
     with open("data", "wb") as fp:   #Pickling
         pickle.dump(data, fp)
-    
+
+def addNew():
+    data = load()
+    nftname = input("NFT NAME : ")
+    nftimg = input("NFT IMG : ")
+    nftOwner = input("NFT OWNER (x if no owner) : ")
+    newNft = [nftname, nftimg, nftOwner]
+    data.append(newNft)
+    save(data)
+
+def editNft():
+    data = load()
+    search = input("NFT name : ")
+    result = findIndex(data, search)
+    print("\t\tSELECTED NFT")
+    print(data[result[0]])
+    save(data)
+
+action = None
+while(action != "3") : 
+    action = input("\t\tNFT PROJECT\n1- ADD NEW NFT\n2- MOVE NFT\n3- CLOSE\n")
+    if(action == "1") :
+        addNew()
+    elif(action == "2") :
+        editNft()
+        
+        
+
